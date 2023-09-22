@@ -1,4 +1,5 @@
 import express from "express";
+import validateRequest from "./src/middlewares/validation.middleware.js";
 import ProductController from "./src/controllers/product.controller.js";
 import ejsLayouts from "express-ejs-layouts";
 import path from "path";
@@ -16,7 +17,7 @@ server.use(ejsLayouts);
 const productController = new ProductController();
 server.get("/", productController.getProducts);
 server.get("/new", productController.getAddForm);
-server.post("/", productController.addNewProduct);
+server.post("/", validateRequest, productController.addNewProduct);
 server.use(express.static("src/views")); //doubt why css not work if i remove this line
 
 server.listen(3400);
