@@ -18,6 +18,9 @@ const productController = new ProductController();
 server.get("/", productController.getProducts);
 server.get("/new", productController.getAddForm);
 server.post("/", validateRequest, productController.addNewProduct);
+server.get("/update/:id", productController.getUpdateProductView);
+server.post("/update", productController.postUpdateProduct);
+server.post("/delete/:id", productController.deleteProduct);
 server.use(express.static("src/views")); //doubt why css not work if i remove this line
 
 server.listen(3400);
