@@ -5,9 +5,11 @@ import ejsLayouts from "express-ejs-layouts";
 import path from "path";
 
 const server = express();
+server.use(express.static("public"));
 server.use(express.urlencoded({ extended: true }));
 // setup view engine settings
 server.set("view engine", "ejs");
+
 // path of our views
 server.set("views", path.join(path.resolve(), "src", "views"));
 
@@ -20,7 +22,7 @@ server.get("/new", productController.getAddForm);
 server.post("/", validateRequest, productController.addNewProduct);
 server.get("/update/:id", productController.getUpdateProductView);
 server.post("/update", productController.postUpdateProduct);
-server.get("/delete/:id", productController.deleteProduct);
+server.post("/delete/:id", productController.deleteProduct);
 server.use(express.static("src/views")); //doubt why css not work if i remove this line
 
 server.listen(3400);

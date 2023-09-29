@@ -39,8 +39,9 @@ export default class ProductController {
   }
 
   deleteProduct(req, res) {
-    console.log(req.params.id);
-    ProductModel.findAndDelete(req.params.id);
-    return res.redirect("/");
+    const id = req.params.id;
+    ProductModel.findAndDelete(id);
+    const result = ProductModel.get();
+    return res.render("products.ejs", { products: result });
   }
 }
