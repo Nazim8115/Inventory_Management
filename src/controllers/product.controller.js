@@ -16,9 +16,10 @@ export default class ProductController {
     res.render("new-product", { errorMessage: null });
   }
 
-  addNewProduct(req, res) {
-    var data = req.body;
-    ProductModel.add(data.name, data.price, data.desc, data.imageUrl);
+  addNewProduct(req, res, next) {
+    const { name, desc, price } = req.body;
+    const imageUrl = "images/" + req.file.filename;
+    ProductModel.add(name, price, desc, imageUrl);
     const result = ProductModel.get();
     return res.render("products.ejs", { products: result });
   }
