@@ -1,6 +1,7 @@
 import express from "express";
 import validateRequest from "./src/middlewares/validation.middleware.js";
 import ProductController from "./src/controllers/product.controller.js";
+import UserController from "./src/controllers/user.conroller.js";
 import ejsLayouts from "express-ejs-layouts";
 import path from "path";
 import { uploadFile } from "./src/middlewares/file-upload.middleware.js";
@@ -18,6 +19,9 @@ server.use(ejsLayouts);
 
 // create an instance of ProductController
 const productController = new ProductController();
+const userController = new UserController();
+
+server.get("/register", userController.getRegister);
 server.get("/", productController.getProducts);
 server.get("/new", productController.getAddForm);
 server.post(
@@ -29,6 +33,7 @@ server.post(
 server.get("/update/:id", productController.getUpdateProductView);
 server.post("/update", productController.postUpdateProduct);
 server.post("/delete/:id", productController.deleteProduct);
+
 server.use(express.static("src/views")); //doubt why css not work if i remove this line
 
 server.listen(3400);
