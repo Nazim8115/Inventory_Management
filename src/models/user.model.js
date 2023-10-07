@@ -10,4 +10,4 @@ export default class UserModel {
     users.push(newUser);
   }
 }
-users = [];
+var users = [];
