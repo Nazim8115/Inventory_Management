@@ -1,6 +1,6 @@
 import UserModel from "../models/user.model.js";
 import ProductModel from "../models/product.model.js";
-import session from "express-session";
+
 export default class UserController {
   getRegister(req, res) {
     res.render("register");

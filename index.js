@@ -6,6 +6,7 @@ import ejsLayouts from "express-ejs-layouts";
 import path from "path";
 import { uploadFile } from "./src/middlewares/file-upload.middleware.js";
 import session from "express-session";
+import { auth } from "./src/middlewares/auth.middleware.js";
 
 const server = express();
 server.use(express.static("public"));
@@ -34,17 +35,18 @@ server.get("/register", userController.getRegister);
 server.post("/register", userController.postRegister);
 server.get("/login", userController.getLogin);
 server.post("/login", userController.postLogin);
-server.get("/", productController.getProducts);
-server.get("/new", productController.getAddForm);
+server.get("/", auth, productController.getProducts);
+server.get("/new", auth, productController.getAddForm);
 server.post(
   "/",
+  auth,
   uploadFile.single("imageUrl"),
   validateRequest,
   productController.addNewProduct
 );
-server.get("/update/:id", productController.getUpdateProductView);
-server.post("/update", productController.postUpdateProduct);
-server.post("/delete/:id", productController.deleteProduct);
+server.get("/update/:id", auth, productController.getUpdateProductView);
+server.post("/update", auth, productController.postUpdateProduct);
+server.post("/delete/:id", auth, productController.deleteProduct);
 
 server.use(express.static("src/views")); //doubt why css not work if i remove this line
 
