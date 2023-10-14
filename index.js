@@ -5,6 +5,7 @@ import UserController from "./src/controllers/user.conroller.js";
 import ejsLayouts from "express-ejs-layouts";
 import path from "path";
 import { uploadFile } from "./src/middlewares/file-upload.middleware.js";
+import session from "express-session";
 
 const server = express();
 server.use(express.static("public"));
@@ -16,6 +17,14 @@ server.set("view engine", "ejs");
 server.set("views", path.join(path.resolve(), "src", "views"));
 
 server.use(ejsLayouts);
+server.use(
+  session({
+    secret: "SecretKey",
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false },
+  })
+);
 
 // create an instance of ProductController
 const productController = new ProductController();
