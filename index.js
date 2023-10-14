@@ -22,8 +22,9 @@ const productController = new ProductController();
 const userController = new UserController();
 
 server.get("/register", userController.getRegister);
-server.post("/register",userController.postRegister);
+server.post("/register", userController.postRegister);
 server.get("/login", userController.getLogin);
+server.post("/login", userController.postLogin);
 server.get("/", productController.getProducts);
 server.get("/new", productController.getAddForm);
 server.post(
