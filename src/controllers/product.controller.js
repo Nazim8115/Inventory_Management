@@ -8,9 +8,9 @@ export default class ProductController {
     // );
 
     const result = ProductModel.get();
+    console.log(req.session.userEmail);
     return res.render("products.ejs", {
       products: result,
-      userEmail: req.session.userEmail,
     });
     // res.json(result);
   }
