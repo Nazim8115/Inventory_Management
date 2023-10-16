@@ -15,7 +15,7 @@ export default class UserModel {
     const result = users.find(
       (u) => u.email === email && u.password === password
     );
-    return result;
+    return result;                                          
   }
 }
 var users = [];

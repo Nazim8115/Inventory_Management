@@ -8,12 +8,18 @@ export default class ProductController {
     // );
 
     const result = ProductModel.get();
-    return res.render("products.ejs", { products: result });
+    return res.render("products.ejs", {
+      products: result,
+      userEmail: req.session.userEmail,
+    });
     // res.json(result);
   }
 
   getAddForm(req, res) {
-    res.render("new-product", { errorMessage: null });
+    res.render("new-product", {
+      errorMessage: null,
+      userEmail: req.session.userEmail,
+    });
   }
 
   addNewProduct(req, res, next) {
@@ -21,20 +27,35 @@ export default class ProductController {
     const imageUrl = "images/" + req.file.filename;
     ProductModel.add(name, price, desc, imageUrl);
     const result = ProductModel.get();
-    return res.render("products.ejs", { products: result });
+    return res.render("products.ejs", {
+      products: result,
+      userEmail: req.session.userEmail,
+    });
   }
 
   getUpdateProductView(req, res) {
     const id = req.params.id;
     const productFound = ProductModel.getById(id);
     if (productFound) {
-      res.render("update-product", { errorMessage: null, data: productFound });
+      res.render("update-product", {
+        errorMessage: null,
+        data: productFound,
+        userEmail: req.session.userEmail,
+      });
     } else {
       res.status(401).send("product not found");
     }
   }
 
   postUpdateProduct(req, res) {
+    const x = {
+      id: req.body.id,
+      name: req.body.name,
+      desc: req.body.desc,
+      price: req.body.price,
+      imageUrl: req.file ? req.file.path : req.body.imageUrl,
+    };
+    console.log(x);
     ProductModel.update(req.body);
     return res.redirect("/");
   }
