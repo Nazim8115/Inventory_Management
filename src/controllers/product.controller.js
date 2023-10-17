@@ -3,19 +3,14 @@ import ProductModel from "../models/product.model.js";
 
 export default class ProductController {
   getProducts(req, res) {
-    // return res.sendFile(
-    //   path.join(path.resolve(), "src", "views", "product.html")
-    // );
-
-    const result = ProductModel.get();
-    console.log(req.session.userEmail);
-    return res.render("products.ejs", {
+    var result = ProductModel.get();
+    res.render("products.ejs", {
       products: result,
+      userEmail: req.session.userEmail,
     });
-    // res.json(result);
   }
 
-  getAddForm(req, res) {
+  getAddForm(req, res, next) {
     res.render("new-product", {
       errorMessage: null,
       userEmail: req.session.userEmail,
